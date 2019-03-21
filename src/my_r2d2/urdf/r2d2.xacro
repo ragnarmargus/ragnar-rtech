@@ -8,7 +8,7 @@
   <xacro:property name="baselen" value="0.4" />
   <xacro:property name="wheeldiam" value="0.07" />
   <xacro:property name="pi" value="3.1415" />
-
+  <xacro:property name="legwidth" value="0.1" />
   <material name="blue">
     <color rgba="0 0 0.8 1"/>
   </material>
@@ -49,14 +49,14 @@
       <visual>
         <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
         <geometry>
-          <cylinder radius="${wheeldiam/2}" length="0.1"/>
+          <cylinder radius="${wheeldiam/2}" length="${legwidth}"/>
         </geometry>
         <material name="black"/>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
         <geometry>
-          <cylinder radius="${wheeldiam/2}" length="0.1"/>
+          <cylinder radius="${wheeldiam/2}" length="${legwidth}"/>
         </geometry>
       </collision>
       <xacro:default_inertial mass="1"/>
@@ -74,14 +74,14 @@
     <link name="${prefix}_leg">
       <visual>
         <geometry>
-          <box size="${leglen} 0.1 0.2"/>
+          <box size="${leglen} ${legwidth} 0.2"/>
         </geometry>
         <origin xyz="0 0 -${leglen/2}" rpy="0 ${pi/2} 0"/>
         <material name="white"/>
       </visual>
       <collision>
         <geometry>
-          <box size="${leglen} 0.1 0.2"/>
+          <box size="${leglen} ${legwidth} 0.2"/>
         </geometry>
         <origin xyz="0 0 -${leglen/2}" rpy="0 ${pi/2} 0"/>
       </collision>
@@ -97,13 +97,13 @@
     <link name="${prefix}_base">
       <visual>
         <geometry>
-          <box size="${baselen} 0.1 0.1"/>
+          <box size="${baselen} ${legwidth} ${legwidth}"/>
         </geometry>
         <material name="white"/>
       </visual>
       <collision>
         <geometry>
-          <box size="${baselen} 0.1 0.1"/>
+          <box size="${baselen} ${legwidth} ${legwidth}"/>
         </geometry>
       </collision>
       <xacro:default_inertial mass="10"/>
@@ -256,5 +256,16 @@
     <child link="box"/>
     <origin xyz="${.707*width+0.04} 0 ${.707*width}"/>
   </joint>
+
+ <link name="base_footprint"/>
+
+ 
+ <joint name="base_to_footprint" type="fixed">
+    <child link="base_link"/>
+    <parent link = "base_footprint"/>
+    <origin xyz="0 0 ${bodylen/2 + legwidth + wheeldiam}"/>
+ </joint>
+
+
 
 </robot>
