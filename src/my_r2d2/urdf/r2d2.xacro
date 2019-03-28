@@ -266,6 +266,13 @@
     <origin xyz="0 0 ${bodylen/2 + legwidth + wheeldiam}"/>
  </joint>
 
+ <link name="eye"/>
 
+
+ <joint name="eye_to_lense" type="fixed">
+    <child link="eye"/>
+    <parent link="lens"/>
+    <origin xyz="0 0 0" rpy="${pi/2} -${pi} ${pi/2}"/>
+ </joint>
 
 </robot>
