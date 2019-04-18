@@ -10,6 +10,7 @@ void range_message_callback(const sensor_msgs::Range msg);
 sensor_msgs::Range range_msg; //Create the message from sensor_msgs Range class
 float bucket[BUCKET_SIZE] = {}; //Create a bucket for the average
 int bucket_position = 0;      //Variable for adding the new member
+int message_changed = 1;
 
 ros::Publisher pub_range;
 ros::Subscriber sub;
@@ -36,6 +37,7 @@ float moving_average(float new_element)
 void range_message_callback(const sensor_msgs::Range msg)
 {
   range_msg = msg; 			       //Copy the structure
+  message_changed = 1;
 }
 
 int main(int argc, char **argv)
@@ -46,15 +48,16 @@ int main(int argc, char **argv)
 	pub_range = nh.advertise<sensor_msgs::Range>("ultrasound/filtered", 1000); //Create a publisher
 	sub = nh.subscribe("ultrasound/raw", 1000, range_message_callback);       //Create a subscriber to handle messages
 
-	ros::Rate loop_rate(5); //Running rate of the loop in Hz
+	ros::Rate loop_rate(500); //Running rate of the loop in Hz
 
 	while(ros::ok())
 	{	
-		
-  		range_msg.range = moving_average(range_msg.range);   //Replace the range with the average
-  		pub_range.publish(range_msg);		       //Publish the new message
-		ros::spinOnce();
-		loop_rate.sleep();
+		if(message_changed){
+	  		range_msg.range = moving_average(range_msg.range);   //Replace the range with the average
+	  		pub_range.publish(range_msg);		       //Publish the new message
+			ros::spinOnce();
+			loop_rate.sleep();
+		}
 	}
 	
 }

@@ -10,6 +10,7 @@ Panels:
         - /TF1
         - /Marker1
         - /Range1
+        - /Range2
       Splitter Ratio: 0.5
     Tree Height: 570
   - Class: rviz/Selection
@@ -265,11 +266,21 @@ Visualization Manager:
     - Alpha: 0.5
       Buffer Length: 1
       Class: rviz/Range
-      Color: 255; 255; 255
+      Color: 255; 0; 255
       Enabled: true
       Name: Range
       Queue Size: 100
       Topic: /ultrasound/filtered
+      Unreliable: false
+      Value: true
+    - Alpha: 0.5
+      Buffer Length: 1
+      Class: rviz/Range
+      Color: 255; 255; 0
+      Enabled: true
+      Name: Range
+      Queue Size: 100
+      Topic: /ultrasound/raw
       Unreliable: false
       Value: true
   Enabled: true
