@@ -3,7 +3,9 @@
     <node name ="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
     <node name ="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
     <node name ="rviz" pkg="rviz" type="rviz" args= "-d $(find my_r2d2)/config/r2d2.rviz"/>
-
+	
+    <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 0 0 0 0 0 1 lens range 100" />
+    <node name ="serial_node" pkg="rosserial_python" type="serial_node.py" args="/dev/ttyUSB0"/>
     <node name ="range" pkg="range_visualizer" type="range_pub"/>
     
 </launch>
