@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+
+<!--Generates a urdf from the macro in sia5_macro.xacro -->
+
+<robot name="motoman_sia5d" xmlns:xacro="http://ros.org/wiki/xacro">
+	<xacro:include filename="$(find motoman_sia5d_support)/urdf/sia5d_macro.xacro"/>
+	<xacro:motoman_sia5d prefix="first_"/>
+
+	<xacro:include filename="$(find motoman_sia5d_support)/urdf/sia5d_macro.xacro"/>
+	<xacro:motoman_sia5d prefix="second_"/>
+
+	<link name="base_link">
+	    <visual>
+	      <geometry>
+		<box size="1 1.5 0.2"/>
+	      </geometry>
+	      <material name="green"/>
+	    </visual>
+	  </link>
+
+	 <joint name="suva" type="fixed">
+	      <axis xyz="0 1 0" rpy="0 0 0" />
+	      <parent link="base_link"/>
+	      <child link="first_base_link"/>
+	      <origin xyz="0 0.5 0" rpy="0 0 0"/>
+	 </joint>
+
+	<joint name="suva2" type="fixed">
+	      <axis xyz="0 1 0" rpy="0 0 0" />
+	      <parent link="base_link"/>
+	      <child link="second_base_link"/>
+	      <origin xyz="0 -0.5 0" rpy="0 0 0"/>
+	 </joint>
+
+</robot>
+
